@@ -18,6 +18,7 @@ public class PrioritySumTest {
 
     public static void main(String[] args) {
         returns_157_as_rucksack_item_priority();
+        returns_70_as_badge_priority();
 
         System.out.println("All tests passed");
     }
@@ -25,5 +26,10 @@ public class PrioritySumTest {
     public static void returns_157_as_rucksack_item_priority() {
         int itemPriority = new PriorityCalculator().calculateForRucksack(puzzleInput);
         assert itemPriority == 157 : "Expected item priorities of 157 but got " + itemPriority;
+    }
+
+    public static void returns_70_as_badge_priority() {
+        int badgePriority = new PriorityCalculator().calculateBadgeForRucksack(puzzleInput);
+        assert badgePriority == 70 : "Expected item priorities of 70 but got " + badgePriority;
     }
 }

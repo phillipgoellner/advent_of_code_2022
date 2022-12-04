@@ -16,13 +16,19 @@ public class CampCleanupTest {
     private final static PuzzleInput puzzleInput = new TestInput(cleanupTasks);
 
     public static void main(String[] args) {
-        returns_2_as_overlapping_assignments();
+        returns_2_as_contained_assignments();
+        returns_4_as_overlapping_assignments();
 
         System.out.println("All tests passed");
     }
 
-    public static void returns_2_as_overlapping_assignments() {
-        int itemPriority = new CampCleanup().numberOfOverlappingAssignments(puzzleInput);
+    public static void returns_2_as_contained_assignments() {
+        int itemPriority = new CampCleanup().numberOfContainedAssignments(puzzleInput);
         assert itemPriority == 2 : "Expected item priorities of 2 but got " + itemPriority;
+    }
+
+    public static void returns_4_as_overlapping_assignments() {
+        int itemPriority = new CampCleanup().numberOfOverlappingAssignments(puzzleInput);
+        assert itemPriority == 4 : "Expected item priorities of 4 but got " + itemPriority;
     }
 }

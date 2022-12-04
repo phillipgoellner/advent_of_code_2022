@@ -14,7 +14,11 @@ public class AssignmentPair {
         return leftAssignment.contains(rightAssignment) || rightAssignment.contains(leftAssignment);
     }
 
-    class Range {
+    public boolean rangesOverlap() {
+        return leftAssignment.overlap(rightAssignment) || rightAssignment.overlap(leftAssignment);
+    }
+
+    static class Range {
         private final int start;
         private final int end;
 
@@ -26,6 +30,10 @@ public class AssignmentPair {
 
         boolean contains(Range other) {
             return this.start <= other.start && this.end >= other.end;
+        }
+
+        boolean overlap(Range other) {
+            return this.start <= other.start && this.end >= other.start;
         }
     }
 }

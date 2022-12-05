@@ -27,12 +27,19 @@ public class CraneStackingTest {
         applies_single_instruction_correctly();
         top_crate_message();
 
+        returns_mcd_as_crate_message();
+
         System.out.println("All tests passed");
     }
 
     static void returns_cmz_as_crate_message() {
         String createMessage = new CraneOperation().followStackingProcedure(puzzleInput);
         assert createMessage.equals("CMZ") : "Expected message 'CMZ' but got '" + createMessage + "'";
+    }
+
+    static void returns_mcd_as_crate_message() {
+        String createMessage = new CraneOperation().followStackingProcedure9001(puzzleInput);
+        assert createMessage.equals("MCD") : "Expected message 'MCD' but got '" + createMessage + "'";
     }
 
     static void creates_empty_CreateStacks() {

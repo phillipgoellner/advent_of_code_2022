@@ -10,11 +10,17 @@ public class CraneOperation {
     public static void main(String[] args) {
         FileBasedPuzzleInput puzzleInput = new FileBasedPuzzleInput("puzzle_input_day_05.txt");
         System.out.println("Part 1: " + new CraneOperation().followStackingProcedure(puzzleInput));
+        System.out.println("Part 2: " + new CraneOperation().followStackingProcedure9001(puzzleInput));
     }
 
     public String followStackingProcedure(PuzzleInput puzzleInput) {
         Drawing procedureDrawing = new Drawing(puzzleInput.lines());
         return procedureDrawing.resolveProcedure();
+    }
+
+    public String followStackingProcedure9001(PuzzleInput puzzleInput) {
+        Drawing procedureDrawing = new Drawing(puzzleInput.lines());
+        return procedureDrawing.resolveProcedure9001();
     }
 
     class Drawing {
@@ -30,6 +36,12 @@ public class CraneOperation {
 
         public String resolveProcedure() {
             procedure.forEach(initialStack::apply);
+
+            return initialStack.topCrateMessage();
+        }
+
+        public String resolveProcedure9001() {
+            procedure.forEach(initialStack::apply9001);
 
             return initialStack.topCrateMessage();
         }

@@ -39,6 +39,18 @@ public class CrateStacks {
         }
     }
 
+    public void apply9001(Instruction instruction) {
+        Stack<String> shiftingCrates = new Stack<>();
+
+        for (int i = 0; i < instruction.cratesToMove(); i++) {
+            shiftingCrates.push(stacks.get(instruction.start() - 1).pop());
+        }
+
+        for (int i = 0; i < instruction.cratesToMove(); i++) {
+            stacks.get(instruction.end() - 1).push(shiftingCrates.pop());
+        }
+    }
+
     public String topCrateMessage() {
         return stacks.stream().map(Stack::peek).reduce("", String::concat);
     }

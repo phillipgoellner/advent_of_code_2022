@@ -6,15 +6,16 @@ import com.pgoellner.advent22.PuzzleInput;
 public class CommunicationTuner {
     public static void main(String[] args) {
         FileBasedPuzzleInput puzzleInput = new FileBasedPuzzleInput("puzzle_input_day_06.txt");
-        System.out.println("Part 1: " + new CommunicationTuner().findMarkerIndex(puzzleInput));
+        System.out.println("Part 1: " + new CommunicationTuner().findMarkerIndex(puzzleInput, 4));
+        System.out.println("Part 2: " + new CommunicationTuner().findMarkerIndex(puzzleInput, 14));
     }
 
-    public int findMarkerIndex(PuzzleInput puzzleInput) {
+    public int findMarkerIndex(PuzzleInput puzzleInput, int markerLength) {
         String bufferLine = puzzleInput.lines().get(0);
 
-        int markerIndex = 4;
+        int markerIndex = markerLength;
 
-        while (!isMarker(bufferLine.substring(markerIndex - 4, markerIndex))) {
+        while (!isMarker(bufferLine.substring(markerIndex - markerLength, markerIndex))) {
             markerIndex++;
         }
 

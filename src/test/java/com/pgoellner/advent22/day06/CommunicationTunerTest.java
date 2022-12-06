@@ -19,7 +19,7 @@ public class CommunicationTunerTest {
     }
 
     static void returns_7_as_marker_index() {
-        int markerIndex = new CommunicationTuner().findMarkerIndex(puzzleInput);
+        int markerIndex = new CommunicationTuner().findMarkerIndex(puzzleInput, 4);
         assert markerIndex == 7 : "Marker index of 7 got " + markerIndex;
     }
 
@@ -32,7 +32,7 @@ public class CommunicationTunerTest {
         );
 
         for (String messageBuffer : testInputs.keySet()) {
-            int markerIndex = new CommunicationTuner().findMarkerIndex(new TestInput(List.of(messageBuffer)));
+            int markerIndex = new CommunicationTuner().findMarkerIndex(new TestInput(List.of(messageBuffer)), 4);
             int expectedIndex = testInputs.get(messageBuffer);
 
             assert markerIndex == expectedIndex : "Marker index of " + expectedIndex + " got " + markerIndex;

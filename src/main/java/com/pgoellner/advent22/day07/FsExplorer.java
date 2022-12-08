@@ -10,6 +10,7 @@ public class FsExplorer {
     public static void main(String[] args) {
         FileBasedPuzzleInput puzzleInput = new FileBasedPuzzleInput("puzzle_input_day_07.txt");
         System.out.println("Part 1: " + new FsExplorer().processCommands(puzzleInput));
+        System.out.println("Part 2: " + new FsExplorer().findMinMaxDir(puzzleInput, 70_000_000, 30_000_000));
     }
     public int processCommands(PuzzleInput puzzleInput) {
         final List<ElfDeviceDir> sizeCandidates = findDirectoryCandidates(
@@ -31,4 +32,12 @@ public class FsExplorer {
         return FsFactory.createFromCommands(puzzleInput.lines());
     }
 
+    public int findMinMaxDir(PuzzleInput puzzleInput, int deviceSpace, int spaceRequiredForUpdate) {
+        ElfDeviceFsElement root = createFsFromCommands(puzzleInput);
+
+        int totalFsSize = root.size();
+        int totalRequiredSpace = spaceRequiredForUpdate - (deviceSpace - totalFsSize);
+
+        return root.collectSubDirs().stream().map(ElfDeviceFsElement::size).filter(dirSize -> dirSize > totalRequiredSpace).sorted().findFirst().orElseThrow();
+    }
 }

@@ -55,6 +55,7 @@ public class FsExplorerTest {
     public static void main(String[] args) {
         returns_95437_as_total_directory_size();
         creates_fs_representation();
+        find_directory_size_24933642_to_be_best_fit_deletion_candidate();
 
         System.out.println("All tests passed");
     }
@@ -69,4 +70,8 @@ public class FsExplorerTest {
         assert resultingFs.equals(fs);
     }
 
+    static void find_directory_size_24933642_to_be_best_fit_deletion_candidate() {
+        int totalSize = new FsExplorer().findMinMaxDir(puzzleInput, 70_000_000, 30_000_000);
+        assert totalSize == 24933642 : "Expected total directory size of 24933642, but got " + totalSize;
+    }
 }

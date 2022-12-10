@@ -18,10 +18,16 @@ public class TreeSurveyorTest {
 
     public static void main(String[] args) {
         total_of_21_trees_are_visible();
+        best_scenic_score_of_8();
     }
 
     static void total_of_21_trees_are_visible() {
         int treesVisible = new TreeSurveyor().countVisibleTrees(puzzleInput);
         assert treesVisible == 21 : "Expected total of 21 visible trees, but got " + treesVisible;
+    }
+
+    static void best_scenic_score_of_8() {
+        int scenicScore = new TreeSurveyor().bestScenicScore(puzzleInput);
+        assert scenicScore == 8 : "Expected scenic score of 8, but got " + scenicScore;
     }
 }

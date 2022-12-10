@@ -11,6 +11,7 @@ public class TreeSurveyor {
     public static void main(String[] args) {
         FileBasedPuzzleInput puzzleInput = new FileBasedPuzzleInput("puzzle_input_day_08.txt");
         System.out.println("Part 1: " + new TreeSurveyor().countVisibleTrees(puzzleInput));
+        System.out.println("Part 2: " + new TreeSurveyor().bestScenicScore(puzzleInput));
     }
 
     public int countVisibleTrees(PuzzleInput puzzleInput) {
@@ -33,6 +34,32 @@ public class TreeSurveyor {
         return visibleTrees.size();
     }
 
+    public int bestScenicScore(PuzzleInput puzzleInput) {
+        List<String> lines = puzzleInput.lines();
+        List<String> columns = transpose(lines);
+
+        int width = lines.get(0).length();
+        int height = lines.size();
+
+        int scenicScore = 1;
+
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                int currentScenicScore = scenicScoreForTree(i, j, lines.get(j), columns.get(i));
+                if (currentScenicScore > scenicScore) {
+                    scenicScore = currentScenicScore;
+                }
+            }
+        }
+
+        return scenicScore;
+    }
+
+    private int scenicScoreForTree(int x, int y, String row, String column) {
+        return visibleTreesToLeft(x, row.toCharArray()) * visibleTreesToRight(x, row.toCharArray()) *
+                visibleTreesToLeft(y, column.toCharArray()) * visibleTreesToRight(y, column.toCharArray());
+    }
+
     private List<String> transpose(List<String> lines) {
         final List<String> columns = new ArrayList<>();
 
@@ -50,6 +77,28 @@ public class TreeSurveyor {
     private boolean treeIsVisible(int x, int y, String row, String column) {
         return treeIsVisibleFromLeft(x, row.toCharArray()) || treeIsVisibleFromRight(x, row.toCharArray()) ||
                 treeIsVisibleFromLeft(y, column.toCharArray()) || treeIsVisibleFromRight(y, column.toCharArray());
+    }
+
+    private int visibleTreesToRight(int position, char[] row) {
+        int visibleTrees = 0;
+        for (int i = position + 1; i < row.length; i++) {
+                visibleTrees++;
+                if (row[i] >= row[position]) {
+                    return visibleTrees;
+                }
+        }
+        return visibleTrees;
+    }
+
+    private int visibleTreesToLeft(int position, char[] row) {
+        int visibleTrees = 0;
+        for (int i = position - 1; i >= 0; i--) {
+                visibleTrees++;
+                if (row[i] >= row[position]) {
+                    return visibleTrees;
+                }
+        }
+        return visibleTrees;
     }
 
     private boolean treeIsVisibleFromRight(int position, char[] row) {

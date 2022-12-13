@@ -168,6 +168,8 @@ public class CpuSignalStrengthTest {
         signal_strength_of_2940_at_140th_cycle();
         signal_strength_of_2880_at_180th_cycle();
         signal_strength_of_3960_at_220th_cycle();
+
+        crt_produces_correct_image();
     }
 
     static void total_signal_strength_of_13140() {
@@ -203,5 +205,18 @@ public class CpuSignalStrengthTest {
     static void signal_strength_of_3960_at_220th_cycle() {
         int signalStrength = new CpuSignalStrengthCalculator().strengthInCycle(puzzleInput, 220);
         assert signalStrength == 3960 : "Expected signal strength of 3960 in cycle 220, but instead got " + signalStrength;
+    }
+
+    static void crt_produces_correct_image() {
+        String expectedImage = """
+                ##..##..##..##..##..##..##..##..##..##..
+                ###...###...###...###...###...###...###.
+                ####....####....####....####....####....
+                #####.....#####.....#####.....#####.....
+                ######......######......######......####
+                #######.......#######.......#######.....""";
+
+        String crtImage = new CpuSignalStrengthCalculator().produceCrtImage(puzzleInput);
+        assert expectedImage.equals(crtImage): "Expected image did not match produced image:\n" + crtImage;
     }
 }

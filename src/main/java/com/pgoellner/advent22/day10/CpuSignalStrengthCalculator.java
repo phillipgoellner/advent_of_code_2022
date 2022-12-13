@@ -10,6 +10,7 @@ public class CpuSignalStrengthCalculator {
     public static void main(String[] args) {
         FileBasedPuzzleInput puzzleInput = new FileBasedPuzzleInput("puzzle_input_day_10.txt");
         System.out.println("Part 1: " + new CpuSignalStrengthCalculator().strengthProduct(puzzleInput));
+        System.out.println("Part 2:\n" + new CpuSignalStrengthCalculator().produceCrtImage(puzzleInput));
     }
 
     public int strengthProduct(PuzzleInput puzzleInput) {
@@ -32,6 +33,10 @@ public class CpuSignalStrengthCalculator {
         cpu.runCycles(cycle);
 
         return cpu.registerValue() * cycle;
+    }
+
+    public String produceCrtImage(PuzzleInput puzzleInput) {
+        return new Crt(puzzleInput.lines()).produceImage();
     }
 }
 
@@ -56,7 +61,7 @@ class Cpu {
         }
     }
 
-    private void oneCycle() {
+    public void oneCycle() {
         String cycleInstruction = this.instructionMemory.pop();
 
         if (cycleInstruction.startsWith("addx")) {
@@ -69,5 +74,40 @@ class Cpu {
 
     public int registerValue() {
         return registerX;
+    }
+}
+
+class Crt {
+    private final Cpu cpu;
+    private int drawingPosition;
+
+    public Crt(List<String> cpuInstructions) {
+        cpu = new Cpu();
+        cpu.loadInstructions(cpuInstructions);
+
+        drawingPosition = 0;
+    }
+
+    public String produceImage() {
+
+        String image = "";
+
+        for (int i = 0; i < 240; i++) {
+            if (i != 0 && i % 40 == 0) {
+                image += "\n";
+                drawingPosition = 0;
+            }
+
+            if (Math.abs(cpu.registerValue() - drawingPosition) <= 1) {
+                image += "#";
+            } else {
+                image += ".";
+            }
+
+            cpu.oneCycle();
+            drawingPosition++;
+        }
+
+        return image;
     }
 }

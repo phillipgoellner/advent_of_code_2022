@@ -13,7 +13,40 @@ public class RopeSimulator {
     public static void main(String[] args) {
         FileBasedPuzzleInput puzzleInput = new FileBasedPuzzleInput("puzzle_input_day_09.txt");
         System.out.println("Part 1: " + new RopeSimulator().visitedPositions(puzzleInput));
+        System.out.println("Part 2: " + new RopeSimulator().visitedPositions(puzzleInput, 9));
     }
+    public int visitedPositions(PuzzleInput puzzleInput, int ropeSegments) {
+        assert ropeSegments >= 1 : "A rope must have at least one segment";
+
+        Point[] multiSegmentRope = new Point[ropeSegments + 1];
+
+        for (int i = 0; i < multiSegmentRope.length; i++) {
+            multiSegmentRope[i] = new Point(0, 0);
+        }
+
+        Set<Point> visitedPositions = new HashSet<>();
+        visitedPositions.add(multiSegmentRope[ropeSegments]);
+
+        for (Move currentMove : puzzleInput.lines().stream().map(this::toMoves).flatMap(List::stream).toList()) {
+            PointTransformation transformation = transform(multiSegmentRope[0], multiSegmentRope[1], currentMove);
+            multiSegmentRope[0] = transformation.head();
+            multiSegmentRope[1] = transformation.tail();
+
+            for (int i = 1; i < ropeSegments; i++) {
+                Point iterationHead = multiSegmentRope[i];
+                Point iterationTail = multiSegmentRope[i + 1];
+
+                PointTransformation segmentTransformation = transform(iterationHead, iterationTail, Move.None);
+                multiSegmentRope[i] = segmentTransformation.head();
+                multiSegmentRope[i + 1] = segmentTransformation.tail();
+            }
+
+            visitedPositions.add(multiSegmentRope[ropeSegments]);
+        }
+
+        return visitedPositions.size();
+    }
+
     public int visitedPositions(PuzzleInput puzzleInput) {
         Point head = new Point(0, 0);
         Point tail = new Point(0, 0);
@@ -37,6 +70,7 @@ public class RopeSimulator {
             case Down -> transformDown(head, tail);
             case Left -> transformLeft(head, tail);
             case Right -> transformRight(head, tail);
+            case None -> transformNone(head, tail);
         };
     }
 
@@ -105,6 +139,50 @@ public class RopeSimulator {
         return new PointTransformation(newHead, new Point(newTailX, newTailY));
     }
 
+    private PointTransformation transformNone(Point head, Point tail) {
+        int newTailX = tail.x();
+        int newTailY = tail.y();
+
+        int deltaX = Math.abs(head.x() - newTailX);
+        int deltaY = Math.abs(head.y() - newTailY);
+
+        if (deltaX > 1 && deltaY > 1) {
+            if (head.x() > newTailX) {
+                newTailX = head.x() - 1;
+            } else {
+                newTailX = head.x() + 1;
+            }
+
+            if (head.y() > tail.y()) {
+                newTailY = head.y() - 1;
+            } else {
+                newTailY = head.y() + 1;
+            }
+        } else if (deltaY > 1) {
+            if (head.y() > tail.y()) {
+                newTailY = head.y() - 1;
+            } else {
+                newTailY = head.y() + 1;
+            }
+
+            if (head.x() != newTailX) {
+                newTailX = head.x();
+            }
+        } else if (deltaX > 1) {
+            if (head.x() > tail.x()) {
+                newTailX = head.x() - 1;
+            } else {
+                newTailX = head.x() + 1;
+            }
+
+            if (head.y() != newTailY) {
+                newTailY = head.y();
+            }
+        }
+
+        return new PointTransformation(head, new Point(newTailX, newTailY));
+    }
+
     private List<Move> toMoves(String line) {
         String[] splitLine = line.split(" ");
         int numberOfSteps = Integer.parseInt(splitLine[1]);
@@ -120,6 +198,6 @@ public class RopeSimulator {
 }
 
 enum Move {
-    Up, Down, Left, Right
+    Up, Down, Left, Right, None
 }
 

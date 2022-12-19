@@ -47,6 +47,8 @@ public class PacketComparatorTest {
         mixed_in_order_3();
         mixed_out_of_order();
         mixed_out_of_order_2();
+
+        packet_sorting_dividers_product_is_140();
     }
 
     static void sum_of_indices_is_13() {
@@ -191,5 +193,11 @@ public class PacketComparatorTest {
                 )
         );
         assert result == ComparisonResult.LeftBigger;
+    }
+
+
+    static void packet_sorting_dividers_product_is_140() {
+        int dividersProduct = new PacketChecker().productOfDividers(puzzleInput);
+        assert dividersProduct == 140 : "Expected dividers product of 140, but got " + dividersProduct;
     }
 }

@@ -13,6 +13,7 @@ public class PacketChecker {
     public static void main(String[] args) {
         FileBasedPuzzleInput puzzleInput = new FileBasedPuzzleInput("puzzle_input_day_13.txt");
         System.out.println("Part 1: " + new PacketChecker().sumOfOrderedIndices(puzzleInput));
+        System.out.println("Part 2: " + new PacketChecker().productOfDividers(puzzleInput));
     }
 
     public int sumOfOrderedIndices(PuzzleInput puzzleInput) {
@@ -135,46 +136,26 @@ public class PacketChecker {
             return comparePackets(left, new PacketValueList(right));
         }
     }
-}
 
-record PacketPair(int index, PacketValue left, PacketValue right) {
-}
+    public int productOfDividers(PuzzleInput puzzleInput) {
+        List<PacketValue> sortedResult = Stream.concat(
+                Stream.of(
+                        new PacketValueList(new PacketValueList(new PacketValueInt(2))),
+                        new PacketValueList(new PacketValueList(new PacketValueInt(6)))
+                ),
+                toPacketPairs(puzzleInput).stream()
+                        .flatMap(pair -> Stream.of(pair.left(), pair.right()))
+        ).sorted(
+                (left, right) -> switch (comparePackets(left, right)) {
+                    case LeftBigger -> 1;
+                    case RightBigger -> -1;
+                    default -> 0;
+                }
+        ).toList();
 
-class PacketValue {
-}
+        int firstIndex = 1 + sortedResult.indexOf(new PacketValueList(new PacketValueList(new PacketValueInt(2))));
+        int secondIndex = 1 + sortedResult.indexOf(new PacketValueList(new PacketValueList(new PacketValueInt(6))));
 
-class PacketValueList extends PacketValue {
-    private final List<PacketValue> values;
-
-    public PacketValueList(List<PacketValue> values) {
-        this.values = values;
+        return firstIndex * secondIndex;
     }
-
-    public PacketValueList(PacketValue... values) {
-        this.values = List.of(values);
-    }
-
-    public List<PacketValue> values() {
-        return values.stream().toList();
-    }
-
-    public String toString() {
-        return values.toString();
-    }
-}
-
-class PacketValueInt extends PacketValue {
-    public final int value;
-
-    public PacketValueInt(int value) {
-        this.value = value;
-    }
-
-    public String toString() {
-        return "" + value;
-    }
-}
-
-enum ComparisonResult {
-    LeftBigger, RightBigger, Equal
 }

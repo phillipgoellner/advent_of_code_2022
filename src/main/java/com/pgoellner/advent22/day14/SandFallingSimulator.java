@@ -13,16 +13,21 @@ public class SandFallingSimulator {
     public static void main(String[] args) {
         FileBasedPuzzleInput puzzleInput = new FileBasedPuzzleInput("puzzle_input_day_14.txt");
         System.out.println("Part 1: " + new SandFallingSimulator().sandUnitCapacity(puzzleInput));
+        System.out.println("Part 2: " + new SandFallingSimulator().sandUnitCapacity(puzzleInput, true));
     }
 
     public int sandUnitCapacity(PuzzleInput puzzleInput) {
+        return sandUnitCapacity(puzzleInput, false);
+    }
+
+    public int sandUnitCapacity(PuzzleInput puzzleInput, boolean withFloor) {
         Point sandStart = new Point(500, 0);
         Set<Point> rockStructure = puzzleInput.lines().stream().flatMap(this::rockPathFromScan).collect(Collectors.toSet());
 
-        return sandCapacity(sandStart, rockStructure);
+        return sandCapacity(sandStart, rockStructure, withFloor);
     }
 
-    public int sandCapacity(Point sandStart, Set<Point> rockStructure) {
+    public int sandCapacity(Point sandStart, Set<Point> rockStructure, boolean withFloor) {
         Set<Point> sandUnits = new HashSet<>();
 
         int maxHeight = 0;
@@ -33,10 +38,36 @@ public class SandFallingSimulator {
             }
         }
 
+        if (withFloor) {
+            int maxWidth = 0;
+            int minWidth = 0;
+
+            maxHeight += 2;
+
+            for (Point rock : rockStructure) {
+                if (maxWidth < rock.x()) {
+                    maxWidth = rock.x();
+                }
+                if (minWidth > rock.x()) {
+                    minWidth = rock.x();
+                }
+            }
+
+            rockStructure.addAll(allPointsBetween(
+                    new Point(minWidth - 50_000, maxHeight),
+                    new Point(maxWidth + 50_000, maxHeight)
+            ));
+        }
+
         Optional<Point> sandLocation = sandRestingPlace(sandStart, rockStructure, sandUnits, maxHeight);
 
         while (sandLocation.isPresent()) {
             sandUnits.add(sandLocation.get());
+
+            if (sandLocation.get().equals(sandStart)) {
+                break;
+            }
+
             sandLocation = sandRestingPlace(sandStart, rockStructure, sandUnits, maxHeight);
         }
 

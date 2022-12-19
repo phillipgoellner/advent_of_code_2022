@@ -14,10 +14,16 @@ public class SandFallingSimulatorTest {
 
     public static void main(String[] args) {
         structure_can_hold_24_units_of_sand();
+        structure_can_hold_93_units_of_sand();
     }
 
     static void structure_can_hold_24_units_of_sand() {
         int unitsOfSand = new SandFallingSimulator().sandUnitCapacity(puzzleInput);
         assert unitsOfSand == 24 : "Expected 24 sand units, but got " + unitsOfSand;
+    }
+
+    static void structure_can_hold_93_units_of_sand() {
+        int unitsOfSand = new SandFallingSimulator().sandUnitCapacity(puzzleInput, true);
+        assert unitsOfSand == 93 : "Expected 93 sand units, but got " + unitsOfSand;
     }
 }

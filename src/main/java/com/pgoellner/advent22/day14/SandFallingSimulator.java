@@ -2,8 +2,7 @@ package com.pgoellner.advent22.day14;
 
 import com.pgoellner.advent22.FileBasedPuzzleInput;
 import com.pgoellner.advent22.PuzzleInput;
-import com.pgoellner.advent22.day09.Point;
-import com.pgoellner.advent22.day13.PacketChecker;
+import com.pgoellner.advent22.Point;
 
 import java.util.*;
 import java.util.stream.Collectors;

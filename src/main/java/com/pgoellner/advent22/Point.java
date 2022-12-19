@@ -1,4 +1,4 @@
-package com.pgoellner.advent22.day09;
+package com.pgoellner.advent22;
 
 public record Point(int x, int y) {
 }

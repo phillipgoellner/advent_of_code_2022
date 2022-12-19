@@ -1,6 +1,7 @@
 package com.pgoellner.advent22.day09;
 
 import com.pgoellner.advent22.FileBasedPuzzleInput;
+import com.pgoellner.advent22.Point;
 import com.pgoellner.advent22.PuzzleInput;
 
 import java.util.Collections;

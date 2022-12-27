@@ -26,10 +26,16 @@ public class SensorCoverageTest {
 
     public static void main(String[] args) {
         coverage_of_26_for_row_10();
+        tuning_frequency_of_56000011();
     }
 
     static void coverage_of_26_for_row_10() {
         int positionsCovered = new SensorCoverageCalculator().coverageOnLine(puzzleInput, 10);
         assert positionsCovered == 26 : "Expected 26 covered positions, but got " + positionsCovered;
+    }
+
+    static void tuning_frequency_of_56000011() {
+        int tuningFrequency = new SensorCoverageCalculator().beaconInArea(puzzleInput, 20);
+        assert tuningFrequency == 56000011 : "Expected 56000011 covered positions, but got " + tuningFrequency;
     }
 }

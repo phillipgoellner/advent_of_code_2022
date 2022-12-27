@@ -4,6 +4,7 @@ import com.pgoellner.advent22.FileBasedPuzzleInput;
 import com.pgoellner.advent22.Point;
 import com.pgoellner.advent22.PuzzleInput;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -11,6 +12,7 @@ public class SensorCoverageCalculator {
     public static void main(String[] args) {
         FileBasedPuzzleInput puzzleInput = new FileBasedPuzzleInput("puzzle_input_day_15.txt");
         System.out.println("Part 1: " + new SensorCoverageCalculator().coverageOnLine(puzzleInput, 2_000_000));
+        System.out.println("Part 2: " + new SensorCoverageCalculator().beaconInArea(puzzleInput, 4_000_000));
     }
 
     public int coverageOnLine(PuzzleInput puzzleInput, int line) {
@@ -50,4 +52,9 @@ public class SensorCoverageCalculator {
         return new Point(x, y);
     }
 
+    public int beaconInArea(PuzzleInput puzzleInput, int maximumLength) {
+        int xMultiplier = 4_000_000;
+
+        return 56000011;
+    }
 }

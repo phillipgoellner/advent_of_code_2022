@@ -38,12 +38,16 @@ public class Monkey {
                 .collect(Collectors.toList());
     }
 
-    public List<Handover> inspectItems() {
+    public List<Handover> inspectItems(int worryLevelDivisor) {
         List<Handover> handovers = new ArrayList<>();
 
         for (int itemToBeInspected : heldItems) {
             itemToBeInspected = operation.calculateNew(itemToBeInspected);
-            itemToBeInspected /= 3;
+            if (worryLevelDivisor == 1) {
+                itemToBeInspected %= this.test;
+            } else {
+                itemToBeInspected /= worryLevelDivisor;
+            }
 
             if (itemToBeInspected % test == 0) {
                 handovers.add(new Handover(recipientIfTestTrue, itemToBeInspected));
@@ -63,7 +67,7 @@ public class Monkey {
         heldItems.add(item);
     }
 
-    public int itemsInspected() {
+    public long itemsInspected() {
         return itemsInspected;
     }
 }

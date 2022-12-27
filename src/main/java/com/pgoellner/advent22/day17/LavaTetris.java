@@ -12,16 +12,21 @@ public class LavaTetris {
     public static void main(String[] args) {
         FileBasedPuzzleInput puzzleInput = new FileBasedPuzzleInput("puzzle_input_day_17.txt");
         System.out.println("Part 1: " + new LavaTetris().simulateStoneFall(puzzleInput));
+//        System.out.println("Part 2: " + new LavaTetris().simulateStoneFall(puzzleInput, 1_000_000_000_000L));
     }
 
     public int simulateStoneFall(PuzzleInput puzzleInput) {
+        return simulateStoneFall(puzzleInput, 2022);
+    }
+
+    public int simulateStoneFall(PuzzleInput puzzleInput, int rounds) {
         GasJets jets = new GasJets(puzzleInput.lines().get(0));
         RockDispenser rocks = new RockDispenser();
 
         List<RockPosition> placedRocks = new ArrayList<>();
         int highestPoint = 0;
 
-        while (placedRocks.size() < 2022) {
+        while (placedRocks.size() < rounds) {
             RockPosition fallingRock = new RockPosition(rocks.getRock(), new Point(2, highestPoint + 3));
 
             while (!fallingRock.stopped()) {

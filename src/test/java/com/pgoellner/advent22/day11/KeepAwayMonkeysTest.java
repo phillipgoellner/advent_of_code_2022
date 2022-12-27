@@ -41,10 +41,22 @@ public class KeepAwayMonkeysTest {
 
     public static void main(String[] args) {
         monkey_business_of_10605_after_20_rounds();
+        monkey_business_of_10197_after_20_rounds();
+        monkey_business_of_2713310158_after_10000_rounds();
     }
 
     static void monkey_business_of_10605_after_20_rounds() {
-        int monkeyBusiness = new MonkeyBusinessAnalyser().simulateMonkeyBusiness(puzzleInput, 20);
+        long monkeyBusiness = new MonkeyBusinessAnalyser().simulateMonkeyBusiness(puzzleInput, 20);
         assert monkeyBusiness == 10605 : "Expected monkey business of 10605, but got " + monkeyBusiness;
+    }
+
+    static void monkey_business_of_10197_after_20_rounds() {
+        long monkeyBusiness = new MonkeyBusinessAnalyser().simulateMonkeyBusiness(puzzleInput, 20, 1);
+        assert monkeyBusiness == 10197L : "Expected monkey business of 10197, but got " + monkeyBusiness;
+    }
+
+    static void monkey_business_of_2713310158_after_10000_rounds() {
+        long monkeyBusiness = new MonkeyBusinessAnalyser().simulateMonkeyBusiness(puzzleInput, 10_000, 1);
+        assert monkeyBusiness == 2713310158L : "Expected monkey business of 2713310158, but got " + monkeyBusiness;
     }
 }
